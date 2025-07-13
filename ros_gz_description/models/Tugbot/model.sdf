@@ -24,7 +24,7 @@
       <collision name="base_link_collision">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <mesh filename="file://$(find ros_gz_example_description)/models/Turgot/meshes/base/tugbot_simp.stl"/>
+          <mesh filename="file://$(find ros_gz_description)/models/Turgot/meshes/base/tugbot_simp.stl"/>
           <!-- <mesh>
             <uri>meshes/base/tugbot_simp.stl</uri>
           </mesh> -->
@@ -33,7 +33,7 @@
       <visual name="base_link_visual">
         <pose>0 0 0 0 0 0</pose>
         <geometry>
-          <mesh filename="file://$(find ros_gz_example_description)/models/Turgot/meshes/base/tugbot_simp.dae"/>
+          <mesh filename="file://$(find ros_gz_description)/models/Turgot/meshes/base/tugbot_simp.dae"/>
           <!-- <mesh>
             <uri>meshes/base/tugbot_simp.dae</uri>  file://$(find my_package) ros_gz_example_description 
           </mesh> -->
