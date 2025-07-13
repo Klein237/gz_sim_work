@@ -36,7 +36,7 @@ def generate_launch_description():
     pkg_ros_gz_sim = get_package_share_directory('ros_gz_sim')
 
     # Load the SDF file from "description" package
-    sdf_file  =  os.path.join(pkg_project_description, 'models', 'Tugbot', 'model.sdf')
+    sdf_file  =  os.path.join(pkg_project_description, 'models', 'tugbot', 'model.sdf')
     with open(sdf_file, 'r') as infp:
         robot_desc = infp.read()
 
@@ -67,7 +67,7 @@ def generate_launch_description():
     rviz = Node(
        package='rviz2',
        executable='rviz2',
-       arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'diff_drive.rviz')],
+       arguments=['-d', os.path.join(pkg_project_bringup, 'config', 'tugbot.rviz')],
        condition=IfCondition(LaunchConfiguration('rviz'))
     )
 
@@ -96,5 +96,5 @@ def generate_launch_description():
         bridge,
         ros_gz_image_bridge,
         robot_state_publisher,
-        #rviz
+        rviz
     ])
