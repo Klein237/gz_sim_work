@@ -88,6 +88,20 @@ def generate_launch_description():
         arguments=["/camera/image_raw"]
     )
 
+
+    static_map_to_base = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='static_map_to_base_link',
+        output='screen',
+        arguments=[
+            '0', '0', '0',    
+            '0', '0', '0',    
+            'map',            
+            'odom'       
+        ],
+    )
+
     return LaunchDescription([
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='true',
@@ -96,5 +110,6 @@ def generate_launch_description():
         bridge,
         ros_gz_image_bridge,
         robot_state_publisher,
+        static_map_to_base,
         rviz
     ])
