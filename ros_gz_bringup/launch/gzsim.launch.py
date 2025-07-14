@@ -28,6 +28,12 @@ from launch_ros.actions import Node
 
 def generate_launch_description():
     # Configure ROS nodes for launch
+    use_joy = LaunchConfiguration('use_joy')
+    declare_use_joy = DeclareLaunchArgument(
+        'use_joy',
+        default_value='true',
+        description='Enable joystick teleop'
+    )
 
     # Setup project paths
     pkg_project_bringup = get_package_share_directory('ros_gz_bringup')
@@ -61,6 +67,14 @@ def generate_launch_description():
             {'use_sim_time': True},
             {'robot_description': robot_desc},
         ]
+    )
+
+    #joystick teleop
+    joystick = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            os.path.join(pkg_project_bringup, 'launch', 'teleop.launch.py')
+        ),
+        condition=IfCondition(use_joy)
     )
 
     # Visualize in RViz
@@ -106,6 +120,8 @@ def generate_launch_description():
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='true',
                               description='Open RViz.'),
+        declare_use_joy,
+        joystick,
                             
         bridge,
         ros_gz_image_bridge,
