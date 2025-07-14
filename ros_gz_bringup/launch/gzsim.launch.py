@@ -118,7 +118,7 @@ def generate_launch_description():
 
     return LaunchDescription([
         gz_sim,
-        DeclareLaunchArgument('rviz', default_value='true',
+        DeclareLaunchArgument('rviz', default_value='false',
                               description='Open RViz.'),
         declare_use_joy,
         joystick,
