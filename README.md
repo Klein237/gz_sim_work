@@ -1,77 +1,71 @@
-# ros_gz_project_template
-A template project integrating ROS 2 and Gazebo simulator.
+# ros_gz_project
+A project integrating ROS 2 and Gazebo simulator.
 
 ## Included packages
 
-* `ros_gz_example_description` - holds the sdf description of the simulated system and any other assets.
+* `ros_gz_description` - holds the sdf description of the simulated system and any other assets.
 
-* `ros_gz_example_gazebo` - holds gazebo specific code and configurations. Namely this is where systems end up.
+* `ros_gz_gazebo` - holds gazebo specific code and configurations. Namely this is where systems end up.
 
-* `ros_gz_example_application` - holds ros2 specific code and configurations.
+* `ros_gz_application` - holds ros2 specific code and configurations.
 
-* `ros_gz_example_bringup` - holds launch files and high level utilities.
+* `ros_gz_bringup` - holds launch files and high level utilities.
 
 
-## Install
+## Prerequisites
 
-For using the template with Gazebo Fortress switch to the `fortress` branch of this repository, otherwise use the default branch `main` for Gazebo Harmonic onwards.
+* Ubuntu 24.04 LTS
+* ROS 2 Jazzy 
+* Gazebo Sim Harmonic
 
-### Requirements
+---
 
-1. Choose a ROS and Gazebo combination https://gazebosim.org/docs/latest/ros_installation
+## Installation
 
-   Note: If you're using a specific and unsupported Gazebo version with ROS 2, you might need to set the `GZ_VERSION` environment variable, for example:
+```bash
+# 1. Clone this repository
+git clone git@github.com:Klein237/gz_sim_work.git
+cd gz_sim_work
 
-    ```bash
-    export GZ_VERSION=harmonic
-    ```
-    Also need to build [`ros_gz`](https://github.com/gazebosim/ros_gz) and [`sdformat_urdf`](https://github.com/ros/sdformat_urdf) from source if binaries are not available for your chosen combination.
+# 2. Install dependencies
+sudo apt update
+sudo apt install \
+  ros-jazzy-navigation2 \
+  ros-jazzy-nav2-bringup \
+  ros-jazzy-teleop-twist-joy \
+  ros-jazzy-slam-toolbox 
 
-1. Install necessary tools
+# 3. Build and source
+colcon build 
+source install/setup.bash
+```
 
-    ```bash
-    sudo apt install python3-vcstool python3-colcon-common-extensions git wget
-    ```
-
-### Use as template
-Directly `Use this template` and create your project repository on Github.
-
-Or start by creating a workspace and cloning the template repository:
-
-   ```bash
-   mkdir -p ~/template_ws/src
-   cd ~/template_ws/src
-   git clone https://github.com/gazebosim/ros_gz_project_template.git
-   ```
+---
 
 ## Usage
 
-1. Install dependencies
+### 1. Triggering the simulation in Gazebo and RViz
 
-    ```bash
-    cd ~/template_ws
-    source /opt/ros/$ROS_DISTRO/setup.bash
-    sudo rosdep init
-    rosdep update
-    rosdep install --from-paths src --ignore-src -r -i -y --rosdistro <ROS_DISTRO>
-    ```
+1. **Launch the simulation**
 
-1. Build the project
+   ```bash
+   ros2 launch ros_gz_bringup gzsim.launch.py 
+   ```
+2. **Launch the mapping with slamtoolbox**
 
-    ```bash
-    colcon build --cmake-args -DBUILD_TESTING=ON
-    ```
+   ```bash
+   ros2 launch ros_gz_application mapping.launch.py
+   ```
 
-1. Source the workspace
+### 2. Autonomous navigation with nav2
 
-    ```bash
-    . ~/template_ws/install/setup.sh
-    ```
+1. **Launch with ROS 2 control enabled**
 
-1. Launch the simulation
+   ```bash
+   ros2 launch ros_gz_application navigation.launch.py 
+   ```
+---
 
-    ```bash
-    ros2 launch ros_gz_example_bringup diff_drive.launch.py
-    ```
+> **Tip:** When launching with we launch the simulation by default, the teleoperation is activate (`use_joy:=false` to disable ) and rviz is disable (`rviz:=true` to activate) . For the navigation, rviz is activate.
 
-For a more detailed guide on using this template see [documentation](https://gazebosim.org/docs/latest/ros_gz_project_template_guide).
+---
