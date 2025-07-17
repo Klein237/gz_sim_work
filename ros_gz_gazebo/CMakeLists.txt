@@ -16,6 +16,10 @@ set(GZ_PLUGIN_VER ${gz-plugin2_VERSION_MAJOR})
 find_package(gz-common5 REQUIRED COMPONENTS profiler)
 set(GZ_COMMON_VER ${gz-common5_VERSION_MAJOR})
 
+find_package(gz-transport13 REQUIRED)
+set(GZ_TRANSPORT_VER ${gz-transport13_VERSION_MAJOR})
+
+
 # Harmonic
 if("$ENV{GZ_VERSION}" STREQUAL "harmonic")
   find_package(gz-sim8 REQUIRED)
@@ -75,6 +79,52 @@ target_link_libraries(FullSystem PRIVATE
 # to the subfolder 'lib/ros_gz_example_gazebo' of the install directory.
 install(
   TARGETS BasicSystem FullSystem
+  DESTINATION lib/${PROJECT_NAME}
+)
+
+
+# --- ActorVelocityControlSystem Plugin ------------------------
+
+# 1) Crée la librairie partagée
+add_library(ActorVelocityControlSystem
+  SHARED
+  src/ActorVelocityControlSystem.cc
+)
+
+# 2) Indique où trouver vos headers
+target_include_directories(ActorVelocityControlSystem
+  PRIVATE include
+)
+
+# 3) Lie la bibliothèque aux bonnes dépendances
+target_link_libraries(ActorVelocityControlSystem
+  PRIVATE
+    # Gazebo Sim core
+    gz-sim${GZ_SIM_VER}::gz-sim${GZ_SIM_VER}
+    # Gazebo Transport
+    gz-transport${GZ_TRANSPORT_VER}::gz-transport${GZ_TRANSPORT_VER}
+    # Le loader de plugins
+    gz-plugin${GZ_PLUGIN_VER}::gz-plugin${GZ_PLUGIN_VER}
+)
+
+
+
+# 4) (Optionnel) C++17
+set_property(TARGET ActorVelocityControlSystem PROPERTY CXX_STANDARD 17)
+
+# 5) Enregistre le plugin pour qu'il soit chargé dynamiquement
+#    via gz-plugin2 (register component)
+# gz_register_plugin(
+#   TARGET ActorVelocityControlSystem
+#   # nom de la librairie (sera injecté dans <plugin filename="...">)
+#   PLUGIN_NAME ActorVelocityControlSystem
+#   # nom complet de la classe au sein du plugin
+#   CLASS_NAME ros_gz_gazebo::ActorVelocityControlSystem
+# )
+
+# 6) Installe la librairie au même endroit que les autres
+install(
+  TARGETS ActorVelocityControlSystem
   DESTINATION lib/${PROJECT_NAME}
 )
 
