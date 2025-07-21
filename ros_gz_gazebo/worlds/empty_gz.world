@@ -67,10 +67,9 @@
       </link>
     </model>
     <include>
-      <name>actor</name>
-      <!-- override actor's pose, which has 1m in Z -->
-      <pose>0 0 0 0 0 0</pose>
-      <uri>https://fuel.gazebosim.org/1.0/Mingfei/models/actor</uri>
+      <uri>
+         https://fuel.gazebosim.org/1.0/abmohit/models/Standing person
+      </uri>
     </include>
     <plugin
         filename="libActorVelocityControlSystem.so"
