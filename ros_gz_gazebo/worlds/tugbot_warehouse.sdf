@@ -365,5 +365,13 @@
       <pose>14.0222 -24.335 0.01 0 -0 0</pose>
       <static>true</static>
     </include>
+
+    <include>
+        <uri>file://./diff_drive.sdf</uri>
+        <pose>10.9 -10.6 0.3 0 0 0</pose>
+        <!-- <pose>13.9 -10.6 0.1 0 0 0</pose> -->
+    </include>
+
+    
   </world>
 </sdf>

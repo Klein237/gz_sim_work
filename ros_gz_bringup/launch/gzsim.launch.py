@@ -116,12 +116,22 @@ def generate_launch_description():
         ],
     )
 
+    odm_to_tf = Node(
+        package='ros_gz_application',
+        executable='odom_to_tf',
+        name='odom_to_tf_broadcaster',
+        output='screen',
+        parameters=[{'use_sim_time': True}],
+
+    )
+
     return LaunchDescription([
         gz_sim,
         DeclareLaunchArgument('rviz', default_value='false',
                               description='Open RViz.'),
         declare_use_joy,
         joystick,
+        odm_to_tf,
                             
         bridge,
         ros_gz_image_bridge,

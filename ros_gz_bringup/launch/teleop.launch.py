@@ -31,7 +31,7 @@ def generate_launch_description():
         name='teleop_node',
         output='screen',
         parameters=[params_file],
-        #remappings=[('cmd_vel', '/diff_cont/cmd_vel_unstamped')]
+        remappings=[('cmd_vel', '/diff_drive/cmd_vel')]
     )
 
    
