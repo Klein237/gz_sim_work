@@ -32,6 +32,13 @@ install(
   DESTINATION share/${PROJECT_NAME}/config
 )
 
+# Install project behavior tree files
+install(
+  DIRECTORY
+    behavior_trees/
+  DESTINATION share/${PROJECT_NAME}/behavior_trees
+)
+
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
   ament_lint_auto_find_test_dependencies()

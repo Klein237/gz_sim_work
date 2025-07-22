@@ -19,7 +19,7 @@ def generate_launch_description():
     package_name = 'ros_gz_application'
 
     static_map_path = os.path.join(get_package_share_directory(package_name), 'config', 'map.yaml')
-    nav2_params_path = os.path.join(get_package_share_directory(package_name), 'config', 'nav2_param.yaml')
+    nav2_params_path = os.path.join(get_package_share_directory(package_name), 'config', 'follow_me.yaml')
     
     bringup_dir = get_package_share_directory('nav2_bringup')
 
@@ -27,7 +27,7 @@ def generate_launch_description():
 
 
     nav2_bt_path = FindPackageShare(package='nav2_bt_navigator').find('nav2_bt_navigator')
-    behavior_tree_xml_path = os.path.join(nav2_bt_path, 'behavior_trees', 'navigate_w_replanning_and_recovery.xml')
+    behavior_tree_xml_path = os.path.join(nav2_params_path, 'behavior_trees', 'follow_me.xml') #navigate_w_replanning_and_recovery #pas utiliser
 
     use_sim_time = LaunchConfiguration('use_sim_time')
     rviz_config_file = LaunchConfiguration('rviz_config_file')
